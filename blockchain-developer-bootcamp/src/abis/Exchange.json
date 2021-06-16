@@ -19106,12 +19106,12 @@
         }
       },
       "links": {},
-      "address": "0x6bA6279974Dc8276ED94BA5D83FD48F1c884F66b",
-      "transactionHash": "0x601e7901173ec9d69e66cc3c87e2084f37d4e3721c139bed00ac8d65d156db52"
+      "address": "0xe0BA8A9855a94b9BB673C03715c6426d8abaB478",
+      "transactionHash": "0x8f914e731253d6e7bd24c1f24229e970c92c371f13c247c54d8591c389ccb31a"
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2021-05-15T08:34:37.197Z",
+  "updatedAt": "2021-06-13T13:48:21.135Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
