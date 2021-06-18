@@ -12,3 +12,12 @@ export const tokens = ether;
 export const GREEN = 'success';
 export const RED = 'danger';
 
+export const formatBalance = (balance) => {
+    const precision = 100;
+
+    balance = ether(balance);
+    balance = Math.round(balance * precision)/ precision;
+
+    return balance;
+}
+

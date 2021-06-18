@@ -1,22 +1,48 @@
-import React,{Fragment} from 'react';
-import {useSelector} from 'react-redux';
+import React, {Fragment} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {
     orderBookSelector,
-    orderBookLoadedSelector
+    orderBookLoadedSelector,
+    accountSelector,
+    exchangeSelector,
+    orderFillingSelector
 } from '../../store/selectors';
 import Spinner from "../Commons/Spinner";
+import {
+    fillOrder
+} from '../../store/interactions'
 
 function OrderBook() {
 
+    const orderBookLoaded = useSelector(state => orderBookLoadedSelector(state));
+    const orderFilling = useSelector(state => orderFillingSelector(state));
+
     const orderBook = useSelector(state => orderBookSelector(state));
-    const showOrderBook = useSelector(state => orderBookLoadedSelector(state));
+    const showOrderBook = orderBookLoaded && !orderFilling;
+    const exchange = useSelector(exchangeSelector);
+    const account = useSelector(accountSelector);
+
+    const dispatch = useDispatch();
 
     const renderOrder = (order) => {
-        return <tr key={order.id}>
-            <td>{order.tokenAmount}</td>
-            <td className={`text-${order.orderTypeClass}`}>{order.tokenPrice}</td>
-            <td>{order.etherAmount}</td>
-        </tr>
+        return <OverlayTrigger
+                key={order.id}
+                placement='auto'
+                overlay={
+                    <Tooltip id={order.id}>
+                        {`Click here to ${order.orderFillAction}`}
+                    </Tooltip>
+                }
+        >
+            <tr key={order.id}
+                onClick={() => fillOrder(dispatch,exchange,order, account)}
+            >
+                <td>{order.tokenAmount}</td>
+                <td className={`text-${order.orderTypeClass}`}>{order.tokenPrice}</td>
+                <td>{order.etherAmount}</td>
+            </tr>
+        </OverlayTrigger>
     }
 
     const listOrderBook = (orderBook) => {
@@ -38,9 +64,9 @@ function OrderBook() {
                     Order Book
                 </div>
                 <div className="card-body order-book">
-                  <table className="table table-dark table-sm small">
-                      {showOrderBook? listOrderBook(orderBook): <Spinner type="table"/>}
-                  </table>
+                    <table className="table table-dark table-sm small">
+                        {showOrderBook ? listOrderBook(orderBook) : <Spinner type="table"/>}
+                    </table>
                 </div>
             </div>
         </div>
