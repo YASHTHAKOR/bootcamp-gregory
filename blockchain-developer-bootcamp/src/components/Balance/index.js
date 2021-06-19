@@ -52,16 +52,15 @@ function Balance() {
 
     useEffect(() => {
         loadBlockChainData();
-    },[]);
+    }, []);
 
     const loadBlockChainData = async () => {
         await loadBalances(dispatch, web3, exchange, token, account);
     }
 
 
-
     const showForm = () => {
-        return  <Tabs defaultActiveKey="deposit" className="bg-dark text-white" >
+        return <Tabs defaultActiveKey="deposit" className="bg-dark text-white">
             <Tab eventKey="deposit" title="deposit" key="deposit" className="bg-dark">
                 <table className="table table-dark table-sm small">
                     <thead>
@@ -77,6 +76,28 @@ function Balance() {
                         <td>{etherBalance}</td>
                         <td>{exchangeEtherBalance}</td>
                     </tr>
+                    </tbody>
+                </table>
+                <form className="row" onSubmit={(event) => {
+
+                    event.preventDefault();
+                    depositEther(dispatch, exchange, web3, etherDepositAmount, account)
+                }
+                }>
+                    <div className=" clo-13 col-sm pr-sm-2">
+                        <input type="text"
+                               placeholder="ETH Amount"
+                               onChange={(e) => dispatch(etherDepositAmountChanged(e.target.value))}
+                               className="form-control form-control-sm bg-dark text-white"
+                               required
+                        />
+                    </div>
+                    <div className="col-12 col-sm-auto pl-sm-0">
+                        <button type="submit" className="btn btn-primary btn-block btn-sm">Deposit</button>
+                    </div>
+                </form>
+                <table className="table table-dark table-sm small">
+                    <tbody>
                     <tr>
                         <td>DNR</td>
                         <td>{tokenBalance}</td>
@@ -87,28 +108,8 @@ function Balance() {
 
                 <form className="row" onSubmit={(event) => {
 
-                event.preventDefault();
-                    depositEther(dispatch, exchange, web3, etherDepositAmount, account)
-                }
-                }>
-                    <div className=" clo-13 col-sm pr-sm-2">
-                        <input type="text"
-                                placeholder="ETH Amount"
-                               onChange={(e) => dispatch(etherDepositAmountChanged(e.target.value))}
-                               className="form-control form-control-sm bg-dark text-white"
-                               required
-                        />
-                    </div>
-                    <div className="col-12 col-sm-auto pl-sm-0">
-                        <button type="submit" className="btn btn-primary btn-block btn-sm">Deposit</button>
-                    </div>
-                </form>
-
-
-                <form className="row" onSubmit={(event) => {
-
                     event.preventDefault();
-                    depositToken(dispatch, exchange, web3,token,  tokenDepositAmount, account)
+                    depositToken(dispatch, exchange, web3, token, tokenDepositAmount, account)
                 }
                 }>
                     <div className=" clo-13 col-sm pr-sm-2">
@@ -140,11 +141,6 @@ function Balance() {
                         <td>{etherBalance}</td>
                         <td>{exchangeEtherBalance}</td>
                     </tr>
-                    <tr>
-                        <td>DNR</td>
-                        <td>{tokenBalance}</td>
-                        <td>{exchangeTokenBalance}</td>
-                    </tr>
                     </tbody>
                 </table>
                 <form className="row" onSubmit={(event) => {
@@ -165,11 +161,19 @@ function Balance() {
                         <button type="submit" className="btn btn-primary btn-block btn-sm">Withdraw</button>
                     </div>
                 </form>
-
+                <table className="table table-dark table-sm small">
+                    <tbody>
+                    <tr>
+                        <td>DNR</td>
+                        <td>{tokenBalance}</td>
+                        <td>{exchangeTokenBalance}</td>
+                    </tr>
+                    </tbody>
+                </table>
                 <form className="row" onSubmit={(event) => {
 
                     event.preventDefault();
-                    withdrawToken(dispatch, exchange, web3,token,  tokenWithdrawAmount, account)
+                    withdrawToken(dispatch, exchange, web3, token, tokenWithdrawAmount, account)
                 }
                 }>
                     <div className=" clo-13 col-sm pr-sm-2">
@@ -189,15 +193,15 @@ function Balance() {
     }
 
     return <div className="card bg-dark text-white">
-            <div className="card-header">
-                Balance
-            </div>
-            <div className="card-body">
-                {!balanceLoading?showForm(): <Spinner/>}
-            </div>
+        <div className="card-header">
+            Balance
+        </div>
+        <div className="card-body">
+            {!balanceLoading ? showForm() : <Spinner/>}
+        </div>
     </div>
 
 
 }
 
-export default  Balance;
+export default Balance;
