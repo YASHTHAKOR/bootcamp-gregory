@@ -7,7 +7,7 @@ function Navbar() {
     const account = useSelector(state => get(state, 'web3.account'))
 
     return <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a className="navbar-brand" href="/#">YT token exchange</a>
+        <a className="navbar-brand" href="/#">DEBYTES token exchange</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
                 aria-label="Toggle navigation">

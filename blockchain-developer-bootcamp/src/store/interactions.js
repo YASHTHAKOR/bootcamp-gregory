@@ -199,7 +199,6 @@ export const withdrawToken = (dispatch, exchange, web3, token, amount, account) 
 }
 
 export const makeBuyOrder = (dispatch, exchange, token, web3, order, account) => {
-    debugger;
     const tokenGet = token.options.address;
     const amountGet = web3.utils.toWei(order.amount, 'ether');
     const tokenGive = ETHER_ADDRESS;
